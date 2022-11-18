@@ -17,6 +17,12 @@ const userSchema = new Schema(
 				default: 'https://cdn2.iconfinder.com/data/icons/people-occupation-job/64/Spy-Anonymous-incognito-Detective-FBI-CIA-Avatar-1024.png',
 			},
 		},
+		about: {
+			type: String,
+			required: false,
+			unique: true,
+			default: "Hey there, I'm using Parches!"
+		},
 		fromPlatform: {
 			type: String,
 			enum: ['local', 'google'],

@@ -9,6 +9,7 @@ module.exports = new GraphQLObjectType({
         username: { type: GraphQLString },
         email: { type: GraphQLString },
         avatar: { type: AvatarType },
+        about: { type: GraphQLString },
         status: { type: GraphQLInt },
         verified: { type: GraphQLBoolean },
         createdAt: { type: DateTimeType },
