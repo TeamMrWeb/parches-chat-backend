@@ -32,7 +32,7 @@ const main = async () => {
         throw new Error(error);
     }
 
-    // email service
+    /**
     try{
         await isValidCredentials();
         console.log(`Email service is ready to use: ${ADDRESS}`);
@@ -40,7 +40,8 @@ const main = async () => {
         console.log('Email service failed :(');
         throw new Error(error);
     }
-
+    */
+   
     // start server
     const server = createServer(app);
     const webSocketServer = new ws.Server({ server, path: '/subscriptions' });
