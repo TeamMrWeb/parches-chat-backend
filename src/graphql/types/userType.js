@@ -31,6 +31,10 @@ const UserType = new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'The email of the user.',
 		},
+		customStatus: {
+			type: GraphQLString,
+			description: 'The custom status of the user.',
+		},
 		avatar: {
 			type: AvatarType,
 			description: 'The avatar of the user.',
