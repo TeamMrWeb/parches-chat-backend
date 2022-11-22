@@ -48,6 +48,12 @@ const userSchema = new Schema(
 				'Please a valid email address',
 			],
 		},
+		customStatus: {
+			type: String,
+			required: false,
+			unique: false,
+			default: 'Hey guys! I am using Parches 💜'
+		},
 		status: {
 			type: Number,
 			default: 0,
