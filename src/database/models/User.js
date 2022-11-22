@@ -51,7 +51,7 @@ const userSchema = new Schema(
 		customStatus: {
 			type: String,
 			required: false,
-			unique: true,
+			unique: false,
 			default: 'Hey guys! I am using Parches 💜'
 		},
 		status: {
