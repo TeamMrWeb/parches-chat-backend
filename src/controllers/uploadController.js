@@ -20,9 +20,9 @@ const { uploadFile, deleteFile } = require('../services/cloudinary')
  * @returns
  */
 const uploadAvatar = async (req, res) => {
-	if (!req.files) return res.status(400).json({ error: 'No files provided' })
+	if (!req.file) return res.status(400).json({ error: 'No files provided' })
 
-	const { image } = req.files
+	const image = req.file
 	const { user } = req
 
 	if (!user) return res.status(401).json({ error: 'Unauthorized' })
@@ -36,7 +36,7 @@ const uploadAvatar = async (req, res) => {
 		console.log(result)
 	}
 	const { public_id, secure_url } = await uploadFile(
-		image.tempFilePath,
+		image.path,
 		PROFILE_AVATAR_FOLDER
 	)
 	userDb.avatar = {
@@ -44,15 +44,17 @@ const uploadAvatar = async (req, res) => {
 		secure_url,
 	}
 	await userDb.save()
-	await fs.unlinkSync(image.tempFilePath)
+	await fs.unlinkSync(image.path)
+    
 	return res
 		.status(200)
 		.json({ message: 'Avatar uploaded/updated successfully' })
 }
 
 const uploadChatImage = async (req, res) => {
-	if (!req.files) return res.status(400).json({ error: 'No files provided' })
-	const { image } = req.files
+	if (!req.file) return res.status(400).json({ error: 'No files provided' })
+
+	const image = req.file
 	const { user } = req
 	const { id } = req.params
 	if (!id) return res.status(400).json({ error: 'No chat id provided' })
@@ -69,7 +71,7 @@ const uploadChatImage = async (req, res) => {
 		await deleteFile(chatDb.avatar.public_id)
 	}
 	const { public_id, secure_url } = await uploadFile(
-		image.tempFilePath,
+		image.path,
 		CHAT_AVATAR_FOLDER
 	)
 	chatDb.avatar = {
@@ -77,13 +79,13 @@ const uploadChatImage = async (req, res) => {
 		secure_url,
 	}
 	await chatDb.save()
-	await fs.unlinkSync(image.tempFilePath)
+	await fs.unlinkSync(image.path)
 	return res.status(200).json({ message: 'Chat image updated successfully' })
 }
 
 const uploadMessageImage = async (req, res) => {
-	if (!req.files) return res.status(400).json({ error: 'No files provided' })
-	const { image } = req.files
+	if (!req.file) return res.status(400).json({ error: 'No files provided' })
+	const image = req.file
 	const { user } = req
 	const { chatId, messageId } = req.params
 	if (!chatId || !messageId)
@@ -114,7 +116,7 @@ const uploadMessageImage = async (req, res) => {
 	}
     */
 	const { public_id, secure_url } = await uploadFile(
-		image.tempFilePath,
+		image.path,
 		MESSAGE_IMAGE_FOLDER
 	)
 	messageDb.image = {
@@ -122,7 +124,7 @@ const uploadMessageImage = async (req, res) => {
 		secure_url,
 	}
 	await messageDb.save()
-	await fs.unlinkSync(image.tempFilePath)
+	await fs.unlinkSync(image.path)
 	return res.status(200).json({ message: 'Message image updated successfully' })
 }
 
