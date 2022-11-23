@@ -6,7 +6,7 @@
 
 const express = require('express')
 const router = express.Router()
-const fileUpload = require('express-fileupload')
+const multer = require('multer')
 const { TEMP_FOLDER } = require('../config').CLOUDINARY
 const {
 	uploadAvatar,
@@ -21,28 +21,19 @@ const {
 
 router.post(
 	'/avatar',
-	fileUpload({
-		useTempFiles: true,
-		tempFileDir: TEMP_FOLDER,
-	}),
+	multer({ dest: TEMP_FOLDER }).single('image'),
 	uploadAvatar
 )
 
 router.post(
 	'/chatavatar/:id',
-	fileUpload({
-		useTempFiles: true,
-		tempFileDir: TEMP_FOLDER,
-	}),
+	multer({ dest: TEMP_FOLDER }).single('image'),
 	uploadChatImage
 )
 
 router.post(
 	'/messageimage/:chatId/:messageId',
-	fileUpload({
-		useTempFiles: true,
-		tempFileDir: TEMP_FOLDER,
-	}),
+	multer({ dest: TEMP_FOLDER }).single('image'),
 	uploadMessageImage
 )
 
