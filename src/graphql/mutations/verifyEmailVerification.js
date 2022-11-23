@@ -4,16 +4,14 @@ const catchError = require('../../helpers/catchError')
 
 module.exports = {
     type: GraphQLString,
-    description: 'Send an email verification to the user.',
-    args: {
-        email: { type: new GraphQLNonNull(GraphQLString) },
-    },
-    resolve: async (parent, { email }, { user, body }) => {
+    description: 'Verify an email verification.',
+    resolve: async (parent, args, { headers, body }) => {
+        const token = headers.authorization
         try {
-            await userController.sendEmailVerification(user, email);
+            await userController.verifyEmailVerification(token);
         } catch (err) {
             catchError(err, body.operationName);
         }
-        return 'Email verification sent successfully.';
+        return 'Verified successfully.';
     }
 }

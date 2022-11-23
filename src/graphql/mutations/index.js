@@ -7,5 +7,6 @@ module.exports = new GraphQLObjectType({
         register: require('./register'),
         login: require('./login'),
         sendEmailVerification: require('./sendEmailVerification'),
+        verifyEmailVerification: require('./verifyEmailVerification'),
     },
 });

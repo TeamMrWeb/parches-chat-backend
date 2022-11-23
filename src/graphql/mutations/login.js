@@ -1,5 +1,6 @@
 const { GraphQLNonNull, GraphQLString } = require("graphql");
 const userController = require("../../controllers/user.controller");
+const catchError = require('../../helpers/catchError')
 
 module.exports = {
     type: GraphQLString,
@@ -21,8 +22,7 @@ module.exports = {
                 userFound = await userController.login(args);
             }
         } catch (err) {
-            console.log(err);
-            throw new Error('An error occurred while signing.');
+            catchError(err, 'login');
         }
         const token = await userController.tokenize({ id: userFound.id, email: userFound.email, username: userFound.username });
         return token;

@@ -7,5 +7,6 @@ module.exports = {
 
     models: {
         User: require('./models/user'),
+        EmailToken: require('./models/emailToken'),
     }
 }
