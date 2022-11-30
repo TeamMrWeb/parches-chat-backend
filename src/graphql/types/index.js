@@ -10,4 +10,5 @@ module.exports = {
 	MessageType: require('./messageType'),
 	AvatarType: require('./avatarType'),
 	ChatType: require('./chatType'),
+    TokenType: require('./tokenType'),
 }
