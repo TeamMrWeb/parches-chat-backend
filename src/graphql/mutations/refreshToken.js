@@ -1,39 +1,42 @@
 /**
  * @file Contains refresh token mutation.
  * @author Manuel Cabral
- * @version 0.0.2
+ * @version 0.0.3
  */
 
 // required modules
 const jwt = require('jsonwebtoken')
-const SECRET = require('../../config').JWT.SECRET
-const { GraphQLNonNull, GraphQLString } = require('graphql')
-const { createToken } = require('../../utils/auth')
+const { REFRESH_SECRET } = require('../../config').JWT
+const { createToken, existRefreshToken } = require('../../utils/auth')
+const { TokenType } = require('../types')
 
 // arguments object
-const args = {
-	token: {
-		type: new GraphQLNonNull(GraphQLString),
-		description: 'The token to refresh (not expired).',
-	},
-}
 
 const resolve = async (_, args, context) => {
-	const { user } = context
-	const { token } = args
-	if (!token) throw new Error('No se proporciono el token para refrescar.')
-	if (!user) throw new Error('No estas logeado para refrescar el token.')
-	const decoded = jwt.verify(token, SECRET)
-	if (!decoded) throw new Error('El token no es valido.')
-	const newToken = await createToken(user)
-	return newToken
+    const { user, refreshToken } = context
+    if (!user || !refreshToken) throw new Error('No autorizado.')
+    const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_SECRET)
+    if (decodedRefreshToken.user.id !== user.id) throw new Error('No autorizado.')
+    const refreshTokenDb = await existRefreshToken(user.id)
+    if( refreshTokenDb.token !== refreshToken) throw new Error('Refresh token expirado')
+    if (!refreshTokenDb) throw new Error('No autorizado.')
+    const accessToken = await createToken({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+    })
+    const newRefreshToken = await createToken({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+    }, { useRefresh: true })
+    return { accessToken, refreshToken: newRefreshToken }
 }
 
 // mutation object
 const refreshToken = {
-	type: GraphQLString,
+	type: TokenType,
 	description: 'Refresh a access token of a logged user.',
-	args,
 	resolve,
 }
 
