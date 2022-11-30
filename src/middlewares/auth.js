@@ -17,9 +17,11 @@ const { SECRET } = require('../config').JWT
  */
 const authenticate = (req, _, next) => {
 	const token = req.headers.auth
+    const refreshToken = req.headers.refresh_token
 	try {
 		const decoded = jwt.verify(token, SECRET)
 		req.user = decoded.user
+        if (refreshToken) req.refreshToken = refreshToken
 		next()
 	} catch (err) {
 		console.log(`${err.message} in ${req.originalUrl} from ${req.ip}`)
