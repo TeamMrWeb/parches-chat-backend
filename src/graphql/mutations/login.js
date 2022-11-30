@@ -8,6 +8,7 @@
 const { findOne } = require('../../controllers/userController')
 const { createToken } = require('../../utils/auth')
 const { GraphQLNonNull, GraphQLString } = require('graphql')
+const TokenType = require('../types/tokenType')
 
 // arguments object
 const args = {
@@ -43,16 +44,22 @@ const resolve = async (_, args) => {
 	}
 	if (!user.verified)
 		throw new Error('Usuario no verificado, por favor verifica tu cuenta.')
-	return createToken({
+    const refreshToken = await createToken({
+		id: user._id,
+		username: user.username,
+		email: user.email,
+	}, { useRefresh: true })
+    const accessToken = await createToken({
 		id: user._id,
 		username: user.username,
 		email: user.email,
 	})
+    return { accessToken, refreshToken }
 }
 
 // mutation object
 const login = {
-	type: GraphQLString,
+	type: TokenType,
 	description: 'Login a user and returns a access token.',
 	args,
 	resolve,
