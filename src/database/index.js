@@ -46,5 +46,6 @@ module.exports = {
 		Message: require('./models/Message'),
 		Chat: require('./models/Chat'),
 		Token: require('./models/Token'),
+        RefreshToken: require('./models/RefreshToken'),
 	},
 }

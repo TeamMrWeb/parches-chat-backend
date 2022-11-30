@@ -9,4 +9,5 @@ module.exports = {
 	Message: require('./Message'),
 	Chat: require('./Chat'),
 	Token: require('./Token'),
+    RefreshToken: require('./RefreshToken'),
 }
