@@ -41,6 +41,8 @@ module.exports = {
 	JWT: {
 		SECRET: process.env.JWT_SECRET || 'supersecret',
 		EXPIRES_IN: process.env.JWT_EXPIRES_IN || '1d',
+        REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '90d',
+        REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || 'supersecret',
 		EMAIL_SECRET: process.env.JWT_EMAIL_SECRET || 'emailsecret',
 		EMAIL_EXPIRES_IN: process.env.JWT_EMAIL_EXPIRES_IN || '5m',
 	},
