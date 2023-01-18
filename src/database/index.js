@@ -1,4 +1,4 @@
-const { connect, connection }= require('mongoose');
+const { connect, connection } = require('mongoose')
 
 module.exports = {
     connectDatabase: async (uri) => await connect(uri),
@@ -8,5 +8,5 @@ module.exports = {
     models: {
         User: require('./models/user'),
         EmailToken: require('./models/emailToken'),
-    }
+    },
 }

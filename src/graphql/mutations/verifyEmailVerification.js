@@ -8,10 +8,10 @@ module.exports = {
     resolve: async (parent, args, { headers, body }) => {
         const token = headers.authorization
         try {
-            await userController.verifyEmailVerification(token);
+            await userController.verifyEmailVerification(token)
         } catch (err) {
-            catchError(err, body.operationName);
+            catchError(err, body.operationName)
         }
-        return 'Verified successfully.';
-    }
+        return 'Verified successfully.'
+    },
 }

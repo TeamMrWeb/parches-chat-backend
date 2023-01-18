@@ -1,5 +1,5 @@
 // required modules
-const path = require('path');
+const path = require('path')
 const cors = require('cors')
 const morgan = require('morgan')
 const express = require('express')
@@ -32,14 +32,16 @@ app.use(cookieParser())
 
 // routes
 app.use('/', indexRouter)
-app.use('/graphql', authContext, graphqlHTTP({
-		schema: v1,
-		graphiql: {
-			subscriptionEndpoint: `ws://localhost:4000/subscriptions`,
-			websocketClient: 'v1',
-		},
-	})
+app.use(
+    '/graphql',
+    authContext,
+    graphqlHTTP({
+        schema: v1,
+        graphiql: {
+            subscriptionEndpoint: `ws://localhost:4000/subscriptions`,
+            websocketClient: 'v1',
+        },
+    })
 )
-
 
 module.exports = app

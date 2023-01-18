@@ -1,4 +1,4 @@
-const { GraphQLObjectType } = require("graphql");
+const { GraphQLObjectType } = require('graphql')
 
 module.exports = new GraphQLObjectType({
     name: 'QueryType',
@@ -8,4 +8,4 @@ module.exports = new GraphQLObjectType({
         user: require('./user'),
         users: require('./users'),
     },
-});
+})

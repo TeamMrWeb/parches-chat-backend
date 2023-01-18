@@ -10,10 +10,10 @@ module.exports = {
     },
     resolve: async (parent, { email }, { user, body }) => {
         try {
-            await userController.sendEmailVerification(user, email);
+            await userController.sendEmailVerification(user, email)
         } catch (err) {
-            catchError(err, body.operationName);
+            catchError(err, body.operationName)
         }
-        return 'Email verification sent successfully.';
-    }
+        return 'Email verification sent successfully.'
+    },
 }

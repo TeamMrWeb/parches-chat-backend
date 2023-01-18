@@ -9,5 +9,5 @@ module.exports = {
         await emailToken.save()
     },
     findOne: async (filter) => await EmailToken.findOne(filter),
-    remove: async (filter) => await EmailToken.deleteOne(filter)
+    remove: async (filter) => await EmailToken.deleteOne(filter),
 }
